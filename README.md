@@ -33,7 +33,7 @@ AlgoU Online Compiler is a web-based code compilation platform that allows users
 ## Installation and Setup
 
 ### Prerequisites
-- Node.js (v14 or higher)
+- Node.js (v22 or higher)
 - npm or yarn
 - C++ compiler on your system
 
