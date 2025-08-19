@@ -13,18 +13,26 @@ const executeCpp = (filepath, inputPath) => {
   const outPath = path.join(outputPath, `${jobId}.out`);
 
   return new Promise((resolve, reject) => {
-    exec(
-      `g++ ${filepath} -o ${outPath} && cd ${outputPath} && ./${jobId}.out < ${inputPath}`,
-      (error, stdout, stderr) => {
-        if (error) {
-          reject({ error, stderr });
-        }
-        if (stderr) {
-          reject(stderr);
-        }
-        resolve(stdout);
+    // Step 1: Compile the code
+    const compileCommand = `g++ ${filepath} -o ${outPath}`;
+    exec(compileCommand, (error, stdout, stderr) => {
+      if (error) {
+        // Reject with a clear compilation error
+        return reject({ type: "CompilationError", message: stderr });
       }
-    );
+
+      // Step 2: If compilation succeeds, execute the compiled file
+      const runCommand = `${outPath} < ${inputPath}`;
+      exec(runCommand, (runError, runStdout, runStderr) => {
+        if (runError) {
+          // Reject with a runtime error
+          return reject({ type: "RuntimeError", message: runStderr });
+        }
+        
+        // Resolve with the output on success
+        resolve(runStdout);
+      });
+    });
   });
 };
 
