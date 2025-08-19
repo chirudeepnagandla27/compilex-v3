@@ -1,4 +1,3 @@
-# AlgoU Online Compiler 👨🏻‍💻
 
 <img src="https://github.com/bhavesh1129/AlgoU-Advanced-Online-Compiler/blob/main/Snapshot.png" />
 
